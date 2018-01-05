@@ -23,7 +23,7 @@ public class JsonMapper extends Mapper<LongWritable, MapWritable, DBOutputWritab
 				status=entry.getValue().toString();
 			}
 		}
-		if(status.equals("ERROR")){
+		if(status.equals("SUCCESS")){
 		context.write(new DBOutputWritable(dt, ip, country, status),NullWritable.get());
 		}
 		
