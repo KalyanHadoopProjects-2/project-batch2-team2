@@ -1,0 +1,30 @@
+create table employeexml( line string);
+
+load data local inpath  '/home/orienit/workspace/hive.input/employee1.xml' into table employeexml;
+
+select * from employeexml;
+
+create table employee1_xml( empid int, name string, salary int, dept string)
+row format delimited 
+fields terminated by '\t';
+
+insert into table employee1_xml
+
+select 
+
+xpath_int(line,'employee/empid'),
+xpath_string(line,'employee/name'),
+xpath_int(line,'employee/salary'),
+xpath_string(line,'employee/dept')
+from employeexml;
+
+
+select * from employee1_xml;;
+
+create table employee1_op(name string,dept string)
+row format delimited fields terminated by '\t';
+
+insert into table employee1_op 
+select name , dept from employee1_xml where empid>2 and dept='dev';
+
+select * from employee1_op;

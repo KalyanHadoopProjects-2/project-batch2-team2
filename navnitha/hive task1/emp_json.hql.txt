@@ -1,0 +1,30 @@
+create database kalyan;
+
+use kalyan;
+
+create table employeejson1(json string);
+
+
+load data local inpath '/home/orienit/workspace/hive.input/employee1.json.txt' overwrite into table employeejson1;
+
+select * from employeejson1;
+
+create external table employee1_json( empid int, name string, salary int , dept string)
+row format delimited
+fields terminated by '\t';
+
+
+insert overwrite table employee1_json
+select x.* from employeejson1
+lateral view json_tuple(json, 'empid' , 'name' , 'salary' , 'dept' )
+x as empid, name,salary,dept;
+
+create external table employee1_op( name string , dept string)
+row format delimited
+fields terminated by '\t';
+
+insert overwrite table employee1_op
+select name , dept from employee1_json where empid>2 and dept='dev';
+
+select * from employee1_op;
+
