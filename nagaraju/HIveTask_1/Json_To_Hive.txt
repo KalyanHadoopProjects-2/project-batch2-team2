@@ -1,0 +1,16 @@
+hive>create database naag;
+
+hive>use naag;
+
+hive>add jar /home/orienit/Desktop/hive/hive-hcatalog-core-1.1.1.jar;
+
+hive>create table if not exists employee1_json (empid int,name string,salary int,dept string)
+	 Row Format SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+	 stored as textfile; 
+	 
+hive>load data local inpath '/home/orienit/Desktop/hive/employee1.json' overwrite into table naag.employee1_json;
+
+hive>create table if not exists naag.employee1_op as select *from employee1_json where empid > 2 and dept = "dev";
+
+hive>select * from employee1_op;
+	 

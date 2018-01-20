@@ -1,0 +1,17 @@
+
+hive>create table xml1(col1);
+
+hive>load data local inpath '/home/orienit/Desktop/hive/employee1.xml' overwrite into table kalyan.xml1;
+
+hive>create table employee1_xml( empid int, name string, salary int, dept string)
+	 row format delimited 
+     fields terminated by '\t';
+
+hive>insert overwrite table employee1_xml select xpath_string(col1,'employee/empid'),xpath_string(col1,'employee/name'),
+      xpath_string(col1,'employee/salary'),xpath_string(col1,'employee/dept') from xml1;
+	  
+hive>select * from emplioyee1_xml;
+
+hive>create table if not exists naag.employee1_xmlop as select *from employee1_xml where empid > 2 and dept = "dev";
+
+hive>select * from employee1_xmlop;
