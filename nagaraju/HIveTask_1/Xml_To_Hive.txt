@@ -1,5 +1,5 @@
 
-hive>create table xml1(col1);
+hive>create table xml1(col1 string);
 
 hive>load data local inpath '/home/orienit/Desktop/hive/employee1.xml' overwrite into table kalyan.xml1;
 
