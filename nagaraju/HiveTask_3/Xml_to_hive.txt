@@ -1,0 +1,22 @@
+
+
+add jar /home/orienit/Desktop/hive/hivexmlserde-1.0.5.3.jar;
+
+CREATE TABLE employee3_xml (empid int,name string,salary int,dept string,details string)
+ROW FORMAT SERDE 'com.ibm.spss.hive.serde2.xml.XmlSerDe'
+WITH SERDEPROPERTIES (
+"column.xpath.empid"="/employee/empid/text()",
+"column.xpath.name"="/employee/name/text()",
+"column.xpath.salary"="/employee/salary/text()",
+"column.xpath.dept"="/employee/dept/text()",
+"column.xpath.details"="/employee/details/text()"
+)
+STORED AS
+INPUTFORMAT 'com.ibm.spss.hive.serde2.xml.XmlInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+TBLPROPERTIES (
+"xmlinput.start"="<employee>",
+"xmlinput.end"="</employee>"
+);
+
+load data local inpath '/home/orienit/Desktop/hive/employee3.xml' overwrite into table naag.employee3_xml;
