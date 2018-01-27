@@ -1,0 +1,23 @@
+
+
+//start cassandra
+cqlsh
+//create keyspace
+CREATE KEYSPACE kalyan WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+
+//create table employee1_csv
+
+create table employee1_csv(empid int,name text,salary int,dept text , primary key(empid));
+
+//create table employee1_tsv
+
+create table employee1_tsv(empid int primary key,name text,salary int,dept text);
+
+
+copy employee1_csv(empid,name,salary,dept) from '/home/orienit/work/nosql/employee1.csv';
+
+
+copy employee1_tsv(empid,name,salary,dept) from '/home/orienit/work/nosql/employee1.tsv' WITH DELIMITER='\t';
+
+select * from employee1_csv where token(empid)>2;
+

@@ -1,0 +1,23 @@
+//task5
+
+use kalyan;
+//create collection
+db.createCollection("employee1_json")
+
+//load data into collection
+$mongoimport --db kalyan --collection employee1_json --file /home/orienit/work/nosql/employee1.json
+
+//export collection data into Local FS json format
+mongoexport --db kalyan --collection employee1_json --out /home/orienit/work/mongodb/employee1_json_op1
+
+//export collection data into Local FS csv format
+mongoexport --db kalyan --collection employee1_json --type csv --out /home/orienit/work/mongodb/employee1_csv_op1
+
+
+//export collection data into Local FS with specific fields in csv format
+
+mongoexport --db kalyan --collection employee1_json -f "name,empid" --type csv --out /home/orienit/work/mongodb/employee1_csv_op2
+
+
+//export collection data into Local FS with specific fields in json format
+mongoexport --db kalyan --collection employee1_json -f "name,empid" --out /home/orienit/work/mongodb/employee1_json_op2
