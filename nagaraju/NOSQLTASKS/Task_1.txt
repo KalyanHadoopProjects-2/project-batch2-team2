@@ -1,0 +1,9 @@
+hbase shell
+
+hbase>create 'employee1_csv','cf'
+
+//Execute below command in ordinary terminal
+
+$hbase org.apache.hadoop.hbase.mapreduce.ImportTsv '-Dimporttsv.separator=,' -Dimporttsv.columns=HBASE_ROW_KEY,cf:name,cf:salary,cf:dept 'employee1_csv' /test/nosql/employee1.csv
+
+hbase>scan 'employee1_csv',{FILTER => "ValueFilter( =, 'binaryprefix:dev' )"}
