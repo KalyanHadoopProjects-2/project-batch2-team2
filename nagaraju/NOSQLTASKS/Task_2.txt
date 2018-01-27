@@ -1,0 +1,9 @@
+hbase shell
+
+hbase>create 'employee2_csv','cf'
+
+//Below commands execute in Normal terminal 
+
+hbase org.apache.hadoop.hbase.mapreduce.Export "employee1_csv" "/test/nosql/op"
+
+hbase org.apache.hadoop.hbase.mapreduce.Import "employee2_csv" "/test/nosql/op/part-m-00000"
