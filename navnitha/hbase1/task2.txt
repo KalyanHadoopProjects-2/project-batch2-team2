@@ -1,0 +1,32 @@
+/////task1:
+
+$hadoop fs -mkdir -p student
+
+$hadoop fs -put /home/orienit/workspace/hbase.input/employ1.csv /user/orienit/student/employ1
+
+$ hbase shell
+        hbase > create 'employee1_csv','cf'
+$hbase org.apache.hadoop.hbase.mapreduce.ImportTsv '-Dimporttsv.separator=,' -Dimporttsv.columns=HBASE_ROW_KEY,cf:id,cf:name,cf:salary,cf:dept employee1_csv '/user/orienit/student/employ1'
+
+        hbase > scan 'employee1_csv'
+
+
+////task2
+
+
+$hadoop fs -mkdir -p kalyan/hbase
+
+$hbase org.apache.hadoop.hbase.mapreduce.Export "employee1_csv"(from task1) "/user/orienit/kalyan/habse/employee1_csv"
+
+
+$hbase org.apache.hadoop.hbase.mapreduce.Import 'emp_import' '/user/orienit/kalyan/habse/employee1_csv'
+
+
+
+
+
+'
+
+
+
+
