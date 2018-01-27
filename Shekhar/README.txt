@@ -5,3 +5,6 @@ Hadoop Task3
 
 
 06/01/2018 Added Initial source code for Task4
+
+
+27/01/2018 Added NOSQL tasks solutions

@@ -1,0 +1,40 @@
+//task4
+
+mkdir /home/orienit/kalyan/mongodb_data
+mongod --dbpath=/home/orienit/kalyan/mongodb_data
+//start mongodb shell
+mongo
+//create database
+use kalyan
+//create collection
+db.createCollection("employee1_json")
+//load data into collection
+$mongoimport --db kalyan --collection employee1_json --file /home/orienit/work/nosql/employee1.json
+//display collection data
+db.employee1_json.find();
+//filter data based on empid and dept
+db.employee1_json.find({$and:[{"empid":{$gt:2}},{"dept": "dev"}]});
+
+//export filter data into Local FS
+mongoexport --db kalyan --collection employee1_json --out /home/orienit/work/mongodb/output/employee1_op.json --query '{$and:[{"empid":{$gt:2}},{"dept": "dev"}]}'
+
+
+db.createCollection("employee2_json")
+$mongoimport --db kalyan --collection employee2_json --file /home/orienit/work/nosql/employee2.json
+//display collection data
+db.employee2_json.find();
+//filter data based on empid and dept
+db.employee2_json.find({$and:[{"empid":{$gt:2}},{"dept": "dev"}]});
+//export filter data into Local FS
+mongoexport --db kalyan --collection employee2_json --out /home/orienit/work/mongodb/output/employee2_op.json --query '{$and:[{"empid":{$gt:2}},{"dept": "dev"}]}'
+
+db.createCollection("employee3_json")
+$mongoimport --db kalyan --collection employee3_json --file /home/orienit/work/nosql/employee3.json
+//display collection data
+db.employee3_json.find();
+//filter data based on empid and dept
+db.employee3_json.find({$and:[{"empid":{$gt:2}},{"dept": "dev"}]});
+//export filter data into Local FS
+mongoexport --db kalyan --collection employee3_json --out /home/orienit/work/mongodb/output/employee3_op.json --query '{$and:[{"empid":{$gt:2}},{"dept": "dev"}]}'
+
+

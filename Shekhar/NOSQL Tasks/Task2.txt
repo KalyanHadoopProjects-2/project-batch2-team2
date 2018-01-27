@@ -1,0 +1,9 @@
+//task2
+
+hdfs dfs -mkdir -p /user/orienit/kalyan/hbase
+
+$hbase org.apache.hadoop.hbase.mapreduce.Export "employee1_csv" "/user/orienit/kalyan/hbase/employee1_csv"
+
+create 'employee1_import','cf'
+
+$hbase org.apache.hadoop.hbase.mapreduce.Import "employee1_import" "/user/orienit/kalyan/hbase/employee1_csv"

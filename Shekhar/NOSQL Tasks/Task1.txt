@@ -1,0 +1,13 @@
+//task1
+
+hdfs dfs -mkdir -p /user/orienit/nosql
+hdfs dfs -put /home/orienit/work/nosql  /user/orienit/nosql
+
+hbase shell
+
+create 'employee1_csv','cf'
+
+//run in normal terminal
+$hbase org.apache.hadoop.hbase.mapreduce.ImportTsv '-Dimporttsv.separator=,' -Dimporttsv.columns=HBASE_ROW_KEY,cf:name,cf:salary,cf:dept 'employee1_csv' /user/orienit/nosql/employee1.csv
+
+scan 'employee1_csv',{ COLUMNS => 'cf:dept', FILTER => "ValueFilter( =, 'regexstring:dev' )" }
