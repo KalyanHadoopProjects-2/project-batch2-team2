@@ -1,0 +1,36 @@
+
+//start cassandra
+cqlsh
+//create keyspace
+CREATE KEYSPACE kalyan WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+
+//create table employee2_csv and employee2_tsv
+
+create table employee2_csv(empid int,name text, salary int,dept text,primary key((dept),empid));
+
+
+create table employee2_tsv(empid int,name text, salary int,dept text,primary key((dept),empid));
+
+
+copy employee2_csv(empid,name,salary,dept) from '/home/orienit/work/nosql/employee2.csv' WITH HEADER = TRUE;
+
+copy employee2_tsv(empid,name,salary,dept) from '/home/orienit/work/nosql/employee2.tsv' WITH HEADER = TRUE AND DELIMITER='\t';
+
+select * from employee2_csv;
+
+select * from employee2_tsv;
+
+select * from employee2_csv where dept='dev' and empid>2;
+
+select * from employee2_tsv where dept='dev' and empid>2;
+
+copy employee2_csv(empid,name,salary,dept) TO '/home/orienit/work/nosql/employee2_csv_op.csv';
+
+copy employee2_tsv(empid,name,salary,dept) TO '/home/orienit/work/nosql/employee2_tsv_op.tsv' WITH DELIMITER='\t';
+
+copy employee2_csv(empid,name,salary,dept) TO '/home/orienit/work/nosql/employee2_csv_op.csv' WITH HEADER = TRUE;
+
+copy employee2_tsv(empid,name,salary,dept) TO '/home/orienit/work/nosql/employee2_tsv_op.tsv' WITH HEADER = TRUE AND DELIMITER='\t';
+
+
+
