@@ -10,4 +10,13 @@ create 'employee1_csv','cf'
 //run in normal terminal
 $hbase org.apache.hadoop.hbase.mapreduce.ImportTsv '-Dimporttsv.separator=,' -Dimporttsv.columns=HBASE_ROW_KEY,cf:name,cf:salary,cf:dept 'employee1_csv' /user/orienit/nosql/employee1.csv
 
-scan 'employee1_csv',{ COLUMNS => 'cf:dept', FILTER => "ValueFilter( =, 'regexstring:dev' )" }
+scan 'employee1_csv', {FILTER => "RowFilter(>, 'binary:2')"}
+
+scan 'employee1_csv', {FILTER => "SingleColumnValueFilter('cf', 'dept', =, 'binary:dev')"}
+
+scan 'employee1_csv', {FILTER => "(SingleColumnValueFilter('cf', 'dept', =, 'binary:dev') AND RowFilter(>, 'binary:2'))" }
+
+
+
+
+
