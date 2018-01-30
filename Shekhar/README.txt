@@ -8,3 +8,5 @@ Hadoop Task3
 
 
 27/01/2018 Added NOSQL tasks solutions
+
+30/01/2018 Added Sqoop tasks solutions

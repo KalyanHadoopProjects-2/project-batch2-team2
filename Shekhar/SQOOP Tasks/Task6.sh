@@ -1,0 +1,12 @@
+sqoop import \
+--options-file /home/orienit/sqoop/db2.properties \
+--table categories \
+--as-textfile \
+--fields-terminated-by ':' \
+--hbase-create-table \
+--hbase-table categories1 \
+--column-family cf \
+--hbase-row-key category_id \
+--delete-target-dir \
+--target-dir=hdfs://quickstart.cloudera:8020/user/orienit/sqoop/categories7 \
+-m 2

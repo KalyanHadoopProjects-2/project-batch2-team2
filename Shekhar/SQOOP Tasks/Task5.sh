@@ -1,0 +1,11 @@
+sqoop import \
+--options-file /home/orienit/sqoop/db2.properties \
+--table categories \
+--as-textfile \
+--fields-terminated-by ':' \
+--hive-import \
+--create-hive-table \
+--hive-table kalyan.categories1 \
+--delete-target-dir \
+--target-dir=hdfs://quickstart.cloudera:8020/user/orienit/sqoop/categories7 \
+-m 2

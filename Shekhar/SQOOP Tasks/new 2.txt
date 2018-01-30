@@ -1,0 +1,70 @@
+Sqoop bug to fix:
+-------------------
+
+sudo ln -s /usr/lib/oozie/libserver/json-20090211.jar /usr/lib/sqoop/lib/json-20090211.jar
+
+
+Task1:
+
+sqoop import \
+--connect jdbc:mysql://quickstart.cloudera:3306/retail_db \
+--username root \
+--password cloudera \
+--table categories \
+--as-textfile \
+--fields-terminated-by ':' \
+--target-dir=hdfs://quickstart.cloudera:8020/user/orienit/sqoop/categories1 \
+-m 2
+
+
+Task2:
+e
+mkdir -p /home/orienit/sqoop
+touch /home/orienit/sqoop/db1.properties
+
+sqoop import \
+--options-file /home/orienit/sqoop/db1.properties \
+--table categories \
+--as-avrodatafile \
+--fields-terminated-by ':' \
+--target-dir=hdfs://quickstart.cloudera:8020/user/orienit/sqoop/categories2 \
+-m 2
+
+Task3:
+touch /home/orienit/sqoop/db2.properties
+touch /home/orienit/sqoop/db.password    //dont create password in password file it won't work at all'
+echo -n "cloudera" > /home/orienit/sqoop/db.password
+chmod 400 /home/orienit/sqoop/db.password
+
+hdfs dfs -mkdir -p /usr/orienit/sqoop/db/password
+hdfs dfs -put /home/orienit/sqoop/db.password /usr/orienit/sqoop/db/password
+
+
+sqoop import \
+--options-file /home/orienit/sqoop/db2.properties \
+--table categories \
+--as-parquetfile \
+--fields-terminated-by ':' \
+--target-dir=hdfs://quickstart.cloudera:8020/user/orienit/sqoop/categories3 \
+-m 2
+
+
+--------------------------------------------
+
+touch /home/orienit/sqoop/db3.properties
+hdfs dfs -mkdir -p /usr/orienit/sqoop/db/password
+hdfs dfs -put /home/orienit/sqoop/db.password /usr/orienit/sqoop/db/password
+
+
+sqoop import \
+--options-file /home/orienit/sqoop/db3.properties \
+--table categories \
+--as-parquetfile \
+--fields-terminated-by ':' \
+--target-dir=hdfs://quickstart.cloudera:8020/user/orienit/sqoop/categories4 \
+-m 2
+
+
+sqoop job --create myjob \
+
+
