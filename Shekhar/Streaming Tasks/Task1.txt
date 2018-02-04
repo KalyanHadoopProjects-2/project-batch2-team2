@@ -1,0 +1,14 @@
+Task1:
+------------
+
+Create twitter account and login to https://apps.twitter.com/ create Application.
+
+Generate Access Tokens and keys.
+
+create kalyan-twitter-hdfs-agent.conf file and place it in flume-ng/conf folder
+
+//agent.sources.Twitter.type = org.apache.flume.source.twitter.TwitterSource
+
+
+flume-ng agent -n agent --conf /usr/lib/flume-ng/conf -f /usr/lib/flume-ng/conf/kalyan-twitter-hdfs-agent.conf -Dflume.root.logger=DEBUG,console
+

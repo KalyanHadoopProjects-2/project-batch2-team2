@@ -1,0 +1,33 @@
+1. Creating Kafka Topic:
+----------------------------
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic flume-topic1
+
+
+2. List of Kafka Topics:
+----------------------------
+kafka-topics --list --zookeeper localhost:2181
+
+
+3. Configure the Kafka Producer:
+----------------------------
+kafka-console-producer --broker-list localhost:9092 --topic flume-topic1
+
+
+4. Configure the Kafka Consumer:
+----------------------------
+kafka-console-consumer --bootstrap-server localhost:9092 --topic flume-topic1 --from-beginning
+
+
+java -cp /home/orienit/kalyan_bigdata_projects/kalyan-bigdata-examples.jar \
+com.orienit.kalyan.examples.GenerateServerLog \
+-f /tmp/serverlog.txt \
+-n 100000 \
+-s 10 \
+-d 2016/01/01 \
+-w 100
+
+
+tail -f /tmp/serverlog.txt | kafka-console-producer --broker-list localhost:9092 --topic flume-topic1
+
+
+flume-ng agent -n agent --conf /usr/lib/flume/conf -f /home/orienit/work/streaming/kalyan-kafka-source-agent.conf

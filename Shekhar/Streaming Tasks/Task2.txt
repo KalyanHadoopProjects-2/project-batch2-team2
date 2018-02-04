@@ -1,0 +1,25 @@
+Task2:
+----------
+
+https://github.com/kalyanhadooptraining/kalyan-bigdata-realtime-projects/blob/master/kalyan/kalyan-bigdata-examples.jar
+
+
+/* CREATE TABLE IF NOT EXISTS kalyan.serverlog( c1 string, c2 string,c3 string,c4 string,c5 string,c6 string,c7 string,c8 string,c9 string)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.RegexSerDe'
+WITH SERDEPROPERTIES (
+  "input.regex" = "([^ ]*) ([^ ]*) ([^ ]*) (-|\\[[^\\]]*\\]) ([^ \"]*|\"[^\"]*\") (-|[0-9]*) (-|[0-9]*)(?: ([^ \"]*|\"[^\"]*\") ([^ \"]*|\"[^\"]*\"))?",
+  "output.format.string" = "%1$s %2$s %3$s %4$s %5$s %6$s %7$s %8$s %9$s"
+)
+Stored as textfile; */
+
+//LOAD DATA INPATH '/user/flume/serverlog' OVERWRITE INTO TABLE serverlog;
+
+
+create kalyan-serverlog-hdfs-agent.conf file and place it in flume-ng/conf folder
+
+CREATE TABLE IF NOT EXISTS kalyan.serverlog( c1 string, c2 string,c3 string,c4 string,c5 string,c6 string,c7 string,c8 string,c9 string)
+clustered by (userid) into 5 buckets stored as orc;
+
+java -cp /home/orienit/work/streaming/kalyan-bigdata-examples.jar com.orienit.kalyan.examples.GenerateServerLog -f /home/orienit/work/streaming/serverlog.txt -n 100 -s 10 -d 2018/02/02 -w 5
+
+flume-ng agent -n log-agent --conf /usr/lib/flume-ng/conf -f /usr/lib/flume-ng/conf/kalyan-serverlog-hdfs-agent.conf --classpath "/usr/lib/hive-hcatalog/share/hcatalog/*":"/usr/lib/hive/lib/*" -Dflume.root.logger=DEBUG,console

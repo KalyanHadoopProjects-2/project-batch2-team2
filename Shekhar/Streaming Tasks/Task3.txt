@@ -1,0 +1,24 @@
+Task 3:
+---------
+
+create kalyan-productlog-hdfs-agent.conf file and place it in flume-ng/conf folder
+
+
+CREATE TABLE IF NOT EXISTS kalyan.users1 (
+userid BIGINT,
+username STRING,
+password STRING,
+email STRING,
+country STRING,
+state STRING,
+city STRING,
+dt STRING
+)
+clustered by (userid) into 5 buckets stored as orc;
+
+java -cp /home/orienit/work/streaming/kalyan-bigdata-examples.jar com.orienit.kalyan.examples.GenerateProductLog -f /home/orienit/work/streaming/productlog.csv -d ',' -n 10 -l 20
+
+
+flume-ng agent -n log-agent --conf /usr/lib/flume-ng/conf -f /usr/lib/flume-ng/conf/kalyan-productlog-hdfs-agent.conf --classpath "/usr/lib/hive-hcatalog/share/hcatalog/*":"/usr/lib/hive/lib/*" -Dflume.root.logger=DEBUG,console
+
+
