@@ -1,0 +1,17 @@
+
+Task5:
+-----------
+
+java -cp /home/orienit/work/streaming/kalyan-bigdata-examples.jar com.orienit.kalyan.examples.GenerateProductLog -f /home/orienit/work/streaming/productlog.csv -d ',' -n 10 -l 20
+
+
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic flume-csv-topic
+
+
+kafka-topics --list --zookeeper localhost:2181
+
+flume-ng agent -n agent --conf /usr/lib/flume/conf -f /home/orienit/work/streaming/kalyan-kafka-sink-agent.conf
+
+kafka-console-consumer --bootstrap-server localhost:9092 --topic flume-csv-topic --from-beginning
+
+//kafka-console-producer --broker-list localhost:9092 --topic flume-csv-topic
