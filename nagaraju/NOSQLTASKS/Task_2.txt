@@ -1,9 +1,14 @@
 hbase shell
 
+
 hbase>create 'employee2_csv','cf'
 
-//Below commands execute in Normal terminal 
+Note : employee1_csv table create in task1
 
-hbase org.apache.hadoop.hbase.mapreduce.Export "employee1_csv" "/test/nosql/op"
+// normal terminal execute the below commands
 
-hbase org.apache.hadoop.hbase.mapreduce.Import "employee2_csv" "/test/nosql/op/part-m-00000"
+hdfs dfs -mkdir -p /user/orienit/naag/hbase
+
+hbase org.apache.hadoop.hbase.mapreduce.Export "employee1_csv" "/user/orienit/naag/hbase/employee1_csv"
+
+hbase org.apache.hadoop.hbase.mapreduce.Import "employee2_csv" "/user/orienit/naag/hbase/employee1_csv"
