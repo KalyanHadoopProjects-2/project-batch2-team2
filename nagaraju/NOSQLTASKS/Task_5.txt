@@ -1,0 +1,7 @@
+// we get employee1_json collection from Task 4
+// export collection data to csv format with specfic fields 
+mongoexport --db naag --collection employee1_json -f "empid,name,salary,dept" --type csv --out /home/orienit/Desktop/nosql/employee1_csv_op1;
+
+// export collection data to json format with specfic fields 
+mongoexport --db naag --collection employee1_json -f "empid,name,salary,dept" --out /home/orienit/Desktop/nosql/employee1_json_op1;
+
