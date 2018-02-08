@@ -1,0 +1,25 @@
+//normal terminal
+mongod --dbpath=/home/orienit/naag/mongodb_data 
+
+//open another terminal execute below command to start mongodb
+
+mongo
+
+//create database
+use naag
+
+//create collection
+db.createCollection("employee1_json")
+
+// normal terminal and execute below command to load json file from local to mongodb collection
+mongoimport --db naag --collection employee1_json --file /home/orienit/Desktop/nosql/employee1.json
+
+//mongo terminal
+
+db.employee1_json.find();
+
+//employid > 2 and dept==dev
+db.employee1_json.find({$and:[{"empid":{$gt:2}},{"dept": "dev"}]});
+
+// normal terminal
+mongoexport --db naag --collection employee1_json --out /home/orienit/Desktop/nosql/output/employee1_op.json --query '{$and:[{"empid":{$gt:2}},{"dept": "dev"}]}'
