@@ -1,0 +1,63 @@
+Task 3: JSON
+-------------------------------------
+//https://github.com/kalyanhadooptraining/hive-json
+
+add jar /usr/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core-1.1.0-cdh5.12.0.jar ;
+
+add jar /home/orienit/work/hive/JSONInputFormat.jar ;
+
+CREATE TABLE employee3_json (empid int, name string, salary float, dept string ) 
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe' STORED AS INPUTFORMAT 'com.orienit.jsonformat.JsonInputFormat' 
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat';
+
+LOAD DATA LOCAL INPATH '/home/orienit/work/hive/employee3.json' INTO TABLE employee3_json;
+
+CREATE TABLE employee3_json (empid int, name string,salary float,dept string, details string) 
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe' STORED AS INPUTFORMAT 'com.orienit.jsonformat.JsonInputFormat' 
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat';
+LOAD DATA LOCAL INPATH '/home/orienit/work/hive/employee3.json' INTO TABLE employee3_json;
+
+
+add jar /usr/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core-1.1.0-cdh5.12.0.jar ;
+
+add jar /home/orienit/work/hive/kalyan-bigdata-utils.jar ;
+
+drop table employee3_json;
+
+
+CREATE EXTERNAL TABLE IF NOT EXISTS kalyan.student_json (c1 int, c2 string)
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+STORED AS
+INPUTFORMAT 'com.orienit.kalyan.mapred.multiline.KalyanMultiLineInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+
+
+
+Task 3: XML
+-------------------------------------
+
+add jar /home/orienit/work/hive/hivexmlserde-1.0.0.0.jar;
+
+CREATE TABLE employee3_xml(empid int, name string, salary float, dept string,address string,pincode bigint,address1 string,pincode1 bigint )
+ROW FORMAT SERDE 'com.ibm.spss.hive.serde2.xml.XmlSerDe'
+WITH SERDEPROPERTIES (
+"column.xpath.empid"="/employee/empid/text()",
+"column.xpath.name"="/employee/name/text()",
+"column.xpath.salary"="/employee/salary/text()",
+"column.xpath.dept"="/employee/dept/text()",
+"column.xpath.address"="/employee/details[1]/address[1]/text()",
+"column.xpath.pincode"="/employee/details[1]/pincode[1]/text()",
+"column.xpath.address1"="employee/details[2]/address[1]/text()",
+"column.xpath.pincode1"="employee/details[2]/pincode[1]/text()"
+)
+STORED AS
+INPUTFORMAT 'com.ibm.spss.hive.serde2.xml.XmlInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+TBLPROPERTIES (
+"xmlinput.start"="<employee>",
+"xmlinput.end"="</employee>"
+);
+
+LOAD DATA LOCAL INPATH '/home/orienit/work/hive/employee3.xml'OVERWRITE INTO TABLE employee3_xml;
+
+select * from employee3_xml where empid>2 and address='hyderabad';

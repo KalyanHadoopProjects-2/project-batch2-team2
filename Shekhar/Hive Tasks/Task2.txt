@@ -1,0 +1,43 @@
+Task2: Json
+----------------------------------------
+
+//https://github.com/kalyanhadooptraining/hive-json
+
+add jar /usr/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core-1.1.0-cdh5.12.0.jar ;
+
+add jar /home/orienit/work/hive/JSONInputFormat.jar ;
+
+CREATE TABLE employee2_json (empid int, name string, salary float, dept string ) 
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe' STORED AS INPUTFORMAT 'com.orienit.jsonformat.JsonInputFormat' 
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat';
+
+LOAD DATA LOCAL INPATH '/home/orienit/work/hive/employee2.json' INTO TABLE employee2_json;
+
+
+
+Task2: XML
+----------------------------------------
+//https://github.com/dvasilen/Hive-XML-SerDe/wiki/XML-data-sources
+
+add jar /home/orienit/work/hive/hivexmlserde-1.0.0.0.jar;
+
+CREATE TABLE employee2_xml(empid int, name string, salary float, dept string )
+ROW FORMAT SERDE 'com.ibm.spss.hive.serde2.xml.XmlSerDe'
+WITH SERDEPROPERTIES (
+"column.xpath.empid"="/employee/empid/text()",
+"column.xpath.name"="/employee/name/text()",
+"column.xpath.salary"="/employee/salary/text()",
+"column.xpath.dept"="/employee/dept/text()"
+)
+STORED AS
+INPUTFORMAT 'com.ibm.spss.hive.serde2.xml.XmlInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+TBLPROPERTIES (
+"xmlinput.start"="<employee>",
+"xmlinput.end"="</employee>"
+);
+
+
+LOAD DATA LOCAL INPATH '/home/orienit/work/hive/employee2.xml'OVERWRITE INTO TABLE employee2_xml;
+
+select *  from employee2_xml where empid>2 AND dept='dev';

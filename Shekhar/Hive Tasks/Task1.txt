@@ -1,0 +1,37 @@
+Task1: JSON
+--------------------------------
+
+https://code.google.com/archive/p/hive-json-serde/wikis/GettingStarted.wiki
+
+https://code.google.com/archive/p/hive-json-serde/downloads
+
+hive>use kalyan;
+
+hive>add jar /home/orienit/work/hive/hive-json-serde-0.2.jar;
+
+hive>add jar /usr/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core-1.1.0-cdh5.12.0.jar ;
+
+hive>CREATE TABLE kalyan.employee1_json(empid int,name string,salary string,dept string) ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'STORED AS TEXTFILE;
+
+hive>LOAD DATA LOCAL INPATH '/home/orienit/work/hive/employee1.json' INTO TABLE kalyan.employee1_json;
+
+hive>select * from employee1_json where empid>2 and dept='dev';
+
+hive>create table employee1_op as select * from employee1_json where empid>2 and dept='dev'
+
+
+Task1: xml
+--------------------------------
+https://community.hortonworks.com/questions/40979/hive-xml-parising-null-value-returned.html
+
+https://stackoverflow.com/questions/20852166/how-to-load-xml-file-into-hive
+
+create table employee1_xml(employeeinfo string);
+
+LOAD DATA LOCAL INPATH '/home/orienit/work/hive/employee1.xml' INTO TABLE employee1_xml;
+
+create view employee_xml_view as SELECT xpath_int(employeeinfo ,'employee/empid'),xpath_string(employeeinfo ,'employee/name'),xpath_string(employeeinfo ,'employee/salary'),xpath_string(employeeinfo ,'employee/dept') FROM employee1_xml;
+
+select * from employee_xml_view;
+
+select * from employee_xml_view where empid>2 and dept='dev';
