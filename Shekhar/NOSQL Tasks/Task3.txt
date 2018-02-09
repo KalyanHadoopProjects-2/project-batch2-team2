@@ -1,0 +1,17 @@
+
+
+create 'employee1_json','cf'
+
+create 'employee1_xml','cf'
+
+scan 'employee1_json', {FILTER => "RowFilter(>, 'binary:2')"}
+
+scan 'employee1_json', {FILTER => "SingleColumnValueFilter('cf', 'dept', =, 'binary:dev')"}
+
+scan 'employee1_json', {FILTER => "(SingleColumnValueFilter('cf', 'dept', =, 'binary:dev') AND RowFilter(>, 'binary:2'))" }
+
+scan 'employee1_xml', {FILTER => "RowFilter(>, 'binary:2')"}
+
+scan 'employee1_xml', {FILTER => "SingleColumnValueFilter('cf', 'dept', =, 'binary:dev')"}
+
+scan 'employee1_xml', {FILTER => "(SingleColumnValueFilter('cf', 'dept', =, 'binary:dev') AND RowFilter(>, 'binary:2'))" }

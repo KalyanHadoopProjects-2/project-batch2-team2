@@ -1,4 +1,7 @@
 
+sudo su
+
+cassandra -R
 
 //start cassandra
 cqlsh
@@ -9,24 +12,24 @@ CREATE KEYSPACE kalyan WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replica
 
 create table employee1_csv(empid int,name text, salary int,dept text,primary key((dept),empid));
 
+
 //create table employee1_tsv
 
 create table employee1_tsv(empid int,name text, salary int,dept text,primary key((dept),empid));
 
 
-copy employee1_csv(empid,name,salary,dept) from '/home/orienit/work/nosql/employee1.csv';
+copy kalyan.employee1_csv(empid,name,salary,dept) from '/home/orienit/work/nosql/employee1.csv';
 
 
-copy employee1_tsv(empid,name,salary,dept) from '/home/orienit/work/nosql/employee1.tsv' WITH DELIMITER='\t';
+copy kalyan.employee1_tsv(empid,name,salary,dept) from '/home/orienit/work/nosql/employee1.tsv' WITH DELIMITER='\t';
 
-select * from employee1_csv;
+select * from kalyan.employee1_csv;
 
-select * from employee1_tsv;
+select * from kalyanemployee1_tsv;
 
-select * from employee1_csv where dept='dev' and empid>2;
+select * from kalyan.employee1_csv where dept='dev' and empid>2;
 
-select * from employee1_tsv where dept='dev' and empid>2;
+copy kalyan.employee1_csv(empid,name,salary,dept) TO '/home/orienit/work/nosql/employee1_csv_op';
 
-copy employee1_csv(empid,name,salary,dept) TO '/home/orienit/work/nosql/employee1_csv_op';
+copy kalyan.employee1_tsv(empid,name,salary,dept) TO '/home/orienit/work/nosql/employee1_tsv_op' WITH DELIMITER='\t';
 
-copy employee1_tsv(empid,name,salary,dept) TO '/home/orienit/work/nosql/employee1_tsv_op' WITH DELIMITER='\t';
