@@ -1,0 +1,28 @@
+//normal termianl
+sudo su
+cassandra -R
+
+//open another normal termianl to start cassandra
+cqlsh
+
+//create keyspace
+CREATE KEYSPACE naag WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+
+//use keyspace
+use naag
+ 
+create table employee1_csv(empid int,name text, salary int,dept text,primary key(empid,dept));
+
+SELECT * FROM employee1_csv WHERE TOKEN(empid) > TOKEN(2) and dept in ('dev') ALLOW FILTERING ;
+
+copy employee1_csv(empid,name,salary,dept) from '/home/orienit/Desktop/nosql/employee1_csv_op';
+
+
+
+ 
+
+
+
+
+
+
